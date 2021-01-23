@@ -7,7 +7,6 @@ QUACK DELAY 3000
 
 # Set victim language, if needed
 #DUCKY_LANG us
-DUCKY_LANG se
 
 LED ATTACK
 QUACK DELAY 3000
